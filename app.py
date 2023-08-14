@@ -50,7 +50,7 @@ description = \
 __Now using Image Variations v2!__
 
 Generate variations on an input image using a fine-tuned version of Stable Diffision.
-sample Diffusion for SEML
+sample Diffusion for SEML.
 ![](https://raw.githubusercontent.com/justinpinkney/stable-diffusion/main/assets/im-vars-thin.jpg)
 
 """
@@ -68,7 +68,7 @@ This is a totally different approach to the img2img script of the original Stabl
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-if device == 'cuda':
+if device == 'cuda': #cuda Sync
     torch.cuda.synchronize()
 
 pipe = StableDiffusionImageVariationPipeline.from_pretrained(
