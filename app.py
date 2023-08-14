@@ -26,8 +26,9 @@ def main(
             [0.48145466, 0.4578275, 0.40821073],
             [0.26862954, 0.26130258, 0.27577711]),
     ])
+    
     inp = tform(input_im).to(device)
-
+    print(inp.size())
     images_list = pipe(
         inp.tile(n_samples, 1, 1, 1),
         guidance_scale=scale,
