@@ -2,13 +2,17 @@ from diffusers import StableDiffusionImageVariationPipeline
 import torch
 import os 
 from tqdm import tqdm as tqdm
-import gradio
+
 from PIL import Image
 import cv2
 from torchvision import transforms
 def diffusion_model(image_path):
-    image = cv2.imread(image_path)
-    
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    if device == 'cuda': #cuda Sync
+        torch.cuda.synchronize()
+
+        
     sd_pipe = StableDiffusionImageVariationPipeline.from_pretrained(
     "lambdalabs/sd-image-variations-diffusers",
     revision="v2.0",
@@ -37,7 +41,7 @@ def diffusion_model(image_path):
 if __name__=='__main__':
     input_path = input("Enter Input Path")
     output_path=input('Enter Output path')
-    if os.path.exists(os.join(output_path,'Result_images')):
+    if os.path.exists(os.path.join(output_path,'Result_images')):
         os.mkidr(os.path.join(output_path,'Result_images'))
     for image in os.listdir(input_path):
         result = diffusion_model(os.path.join(input_path,image))
