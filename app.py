@@ -50,10 +50,6 @@ description = \
 __Now using Image Variations v2!__
 
 Generate variations on an input image using a fine-tuned version of Stable Diffision.
-Trained by [Justin Pinkney](https://www.justinpinkney.com) ([@Buntworthy](https://twitter.com/Buntworthy)) at [Lambda](https://lambdalabs.com/)
-
-This version has been ported to 🤗 Diffusers library, see more details on how to use this version in the [Lambda Diffusers repo](https://github.com/LambdaLabsML/lambda-diffusers).
-For the original training code see [this repo](https://github.com/justinpinkney/stable-diffusion).
 
 ![](https://raw.githubusercontent.com/justinpinkney/stable-diffusion/main/assets/im-vars-thin.jpg)
 
@@ -68,12 +64,13 @@ the CLIP _image_ encoder instead. So instead of generating images based a text i
 This creates images which have the same rough style and content, but different details, in particular the composition is generally quite different.
 This is a totally different approach to the img2img script of the original Stable Diffusion and gives very different results.
 
-The model was fine tuned on the [LAION aethetics v2 6+ dataset](https://laion.ai/blog/laion-aesthetics/) to accept the new conditioning.
-Training was done on 8xA100 GPUs on [Lambda GPU Cloud](https://lambdalabs.com/service/gpu-cloud).
-More details are on the [model card](https://huggingface.co/lambdalabs/sd-image-variations-diffusers).
 """
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+
+if device = 'cuda':
+    torch.cuda.synchronize()
+
 pipe = StableDiffusionImageVariationPipeline.from_pretrained(
     "lambdalabs/sd-image-variations-diffusers",
 )
