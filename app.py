@@ -68,7 +68,7 @@ This is a totally different approach to the img2img script of the original Stabl
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-if device = 'cuda':
+if device == 'cuda':
     torch.cuda.synchronize()
 
 pipe = StableDiffusionImageVariationPipeline.from_pretrained(
