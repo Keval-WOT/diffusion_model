@@ -5,34 +5,35 @@ from torchvision import transforms
 
 from diffusers import StableDiffusionImageVariationPipeline
 
+
 def main(
     input_im,
     scale=3.0,
     n_samples=4,
     steps=25,
     seed=0,
-    ):
+):
     generator = torch.Generator(device=device).manual_seed(int(seed))
 
     tform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Resize(
-        (224, 224),
-        interpolation=transforms.InterpolationMode.BICUBIC,                                                                                                                                 
-        antialias=False,                                            
-        ),                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        transforms.ToTensor(),
+        transforms.Resize(
+            (224, 224),
+            interpolation=transforms.InterpolationMode.BICUBIC,
+            antialias=False,
+        ),
         transforms.Normalize(
-          [0.48145466, 0.4578275, 0.40821073],
-          [0.26862954, 0.26130258, 0.27577711]),
+            [0.48145466, 0.4578275, 0.40821073],
+            [0.26862954, 0.26130258, 0.27577711]),
     ])
     inp = tform(input_im).to(device)
-        
+
     images_list = pipe(
         inp.tile(n_samples, 1, 1, 1),
         guidance_scale=scale,
         num_inference_steps=steps,
         generator=generator,
-        )
+    )
 
     images = []
     for i, image in enumerate(images_list["images"]):
@@ -45,7 +46,7 @@ def main(
 
 
 description = \
-"""
+    """
 __Now using Image Variations v2!__
 
 Generate variations on an input image using a fine-tuned version of Stable Diffision.
@@ -59,7 +60,7 @@ For the original training code see [this repo](https://github.com/justinpinkney/
 """
 
 article = \
-"""
+    """
 ## How does this work?
 
 The normal Stable Diffusion model is trained to be conditioned on text input. This version has had the original text encoder (from CLIP) removed, and replaced with
@@ -75,8 +76,12 @@ More details are on the [model card](https://huggingface.co/lambdalabs/sd-image-
 device = "cuda" if torch.cuda.is_available() else "cpu"
 pipe = StableDiffusionImageVariationPipeline.from_pretrained(
     "lambdalabs/sd-image-variations-diffusers",
-    )
+)
 pipe = pipe.to(device)
+
+# Wrap the model with DataParallel
+if device == "cuda":
+    pipe = torch.nn.DataParallel(pipe)
 
 inputs = [
     gr.Image(),
@@ -101,5 +106,5 @@ demo = gr.Interface(
     inputs=inputs,
     outputs=output,
     examples=examples,
-    )
+)
 demo.launch(share=True)
