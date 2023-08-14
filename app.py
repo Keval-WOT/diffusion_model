@@ -79,10 +79,6 @@ pipe = StableDiffusionImageVariationPipeline.from_pretrained(
 )
 pipe = pipe.to(device)
 
-# Wrap the model with DataParallel
-if device == "cuda":
-    pipe = torch.nn.DataParallel(pipe)
-
 inputs = [
     gr.Image(),
     gr.Slider(0, 25, value=3, step=1, label="Guidance scale"),
