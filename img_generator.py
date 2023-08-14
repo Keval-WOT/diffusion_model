@@ -39,8 +39,8 @@ def diffusion_model(image_path):
 
 
 if __name__=='__main__':
-    input_path = input("Enter Input Path")
-    output_path=input('Enter Output path')
+    input_path = '/kaggle/working/diffusion_model/results'
+    output_path='/kaggle/working/diffusion_model'
     if os.path.exists(os.path.join(output_path,'Result_images')):
         os.mkidr(os.path.join(output_path,'Result_images'))
     for image in os.listdir(input_path):
