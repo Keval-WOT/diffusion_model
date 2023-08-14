@@ -30,8 +30,8 @@ def diffusion_model(image_path):
     inp = tform(im).to(device)
 
     out = sd_pipe(inp, guidance_scale=3)
-    out["images"][0].save("result.jpg")
-
+    print(type(out["images"][0].save("result.jpg")))
+    
 
 
 if __name__=='__main__':
