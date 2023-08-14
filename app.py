@@ -50,7 +50,7 @@ description = \
 __Now using Image Variations v2!__
 
 Generate variations on an input image using a fine-tuned version of Stable Diffision.
-
+sample Diffusion for SEML
 ![](https://raw.githubusercontent.com/justinpinkney/stable-diffusion/main/assets/im-vars-thin.jpg)
 
 """
